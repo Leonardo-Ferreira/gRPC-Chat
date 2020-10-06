@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+option csharp_namespace = "Library";
+
+package chatMsg;
+
+// The greeting service definition.
+service Messenger {
+  // Sends a greeting
+  rpc JoinChat (JoinChatRequest) returns (JoinChatResponse);
+  rpc EnterChatRoom (stream ChatMessage) returns (stream ChatMessage);
+  rpc CreateRoom (CreateChatRoomRequest) returns (JoinChatResponse);
+  rpc ListRooms (ListRoomsRequest) returns (stream AvailableRoom);
+}
+
+// The request message containing the user's name.
+message JoinChatRequest {
+  string roomName = 1;
+}
+
+// The response message containing the greetings.
+message JoinChatResponse {
+  int32 roomId = 1;
+}
+
+message ChatMessage {
+  int32 roomId = 1;
+  string roomName = 2;
+  string text = 3;
+  string author = 4;
+  bool systemMessage = 5;
+  string timestamp = 6;
+}
+
+message CreateChatRoomRequest{
+    string roomName = 1;
+}
+
+message ListRoomsRequest{
+    string filter = 1;
+}
+
+message AvailableRoom{
+    string roomName = 1;
+    string participants = 2;
+}
